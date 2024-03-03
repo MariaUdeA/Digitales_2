@@ -22,6 +22,4 @@ module deco7seg_hexa(
 			4'hF: SEG = 8'b0111_0001;
 		endcase
 	end
-	
-	
 endmodule

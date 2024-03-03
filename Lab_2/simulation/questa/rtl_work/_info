@@ -1,0 +1,89 @@
+m255
+K4
+z2
+!s11f vlog 2020.1 2020.02, Feb 28 2020
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+Z0 dC:/Users/julia/Desktop/Universidad/Electronica Digital 2/Laboratorio/Lab_2/simulation/questa
+vdeco7seg_hexa
+Z1 DXx6 sv_std 3 std 0 22 VYECXdT12H8WgbUP_5Y6:3
+Z2 !s110 1709429117
+!i10b 1
+!s100 4doo61jL[SAk0We;ffiTO2
+Z3 !s11b Dg1SIo80bB@j0V0VzS_@n1
+I=4Ea1:4P9<EZd6=1;1hUG3
+Z4 VDg1SIo80bB@j0V0VzS_@n1
+S1
+R0
+w1709423338
+8C:/Users/julia/Desktop/Universidad/Electronica Digital 2/Laboratorio/Lab_2/deco7seg_hexa.sv
+FC:/Users/julia/Desktop/Universidad/Electronica Digital 2/Laboratorio/Lab_2/deco7seg_hexa.sv
+!i122 1
+L0 1 27
+Z5 OV;L;2020.1;71
+r1
+!s85 0
+31
+Z6 !s108 1709429117.000000
+!s107 C:/Users/julia/Desktop/Universidad/Electronica Digital 2/Laboratorio/Lab_2/deco7seg_hexa.sv|
+!s90 -reportprogress|300|-sv|-work|work|+incdir+C:/Users/julia/Desktop/Universidad/Electronica Digital 2/Laboratorio/Lab_2|C:/Users/julia/Desktop/Universidad/Electronica Digital 2/Laboratorio/Lab_2/deco7seg_hexa.sv|
+!i113 1
+Z7 o-sv -work work
+Z8 !s92 -sv -work work {+incdir+C:/Users/julia/Desktop/Universidad/Electronica Digital 2/Laboratorio/Lab_2}
+Z9 tCvgOpt 0
+vtestbench
+R1
+R2
+!i10b 1
+!s100 XEc8=Z;;2LCKd2CZ`L_dT2
+R3
+Ik<RgdfL@]_7Rfg9FeFoH00
+R4
+S1
+R0
+Z10 w1709429050
+Z11 8C:/Users/julia/Desktop/Universidad/Electronica Digital 2/Laboratorio/Lab_2/trafficlight.sv
+Z12 FC:/Users/julia/Desktop/Universidad/Electronica Digital 2/Laboratorio/Lab_2/trafficlight.sv
+!i122 0
+L0 177 47
+R5
+r1
+!s85 0
+31
+R6
+Z13 !s107 C:/Users/julia/Desktop/Universidad/Electronica Digital 2/Laboratorio/Lab_2/trafficlight.sv|
+Z14 !s90 -reportprogress|300|-sv|-work|work|+incdir+C:/Users/julia/Desktop/Universidad/Electronica Digital 2/Laboratorio/Lab_2|C:/Users/julia/Desktop/Universidad/Electronica Digital 2/Laboratorio/Lab_2/trafficlight.sv|
+!i113 1
+R7
+R8
+R9
+vtrafficlight
+R1
+R2
+!i10b 1
+!s100 a^H6nWICz8l0a^3e`8Oz]0
+R3
+IDR1z2dW^lS4AMM2ci;I>80
+R4
+S1
+R0
+R10
+R11
+R12
+!i122 0
+L0 5 168
+R5
+r1
+!s85 0
+31
+R6
+R13
+R14
+!i113 1
+R7
+R8
+R9

@@ -1,0 +1,1 @@
+Warning (10268): Verilog HDL information at trafficlight.sv(59): always construct contains both blocking and non-blocking assignments File: C:/Users/julia/Desktop/Universidad/Electronica Digital 2/Laboratorio/Lab_2/trafficlight.sv Line: 59
