@@ -176,7 +176,7 @@ endmodule
 	**************** */
 module testbench();
 	/* Declaración de señales y variables internas */
-	logic clk, reset, btnn;
+	logic clk, reset, btn;
 	logic [2:0] main_lights, sec_lights;
 	logic [1:0] p_lights;
 
@@ -196,7 +196,7 @@ module testbench();
 
 	// Instanciar objeto
 	trafficlight #(FPGAFREQ, tVERDE1, tAMAR1, tVERDE2, tAMAR2,tVERDE3, tROJO,tRESET) tl 
-	              (clk,~reset,~btnn, main_lights, sec_lights,p_lights, btn_pressed, Seg0, Seg1);
+	              (clk,~reset,~btn, main_lights, sec_lights, p_lights, btn_pressed, Seg0, Seg1);
 	// Simulación
 	initial begin
 		//ciclo sin botón
@@ -222,7 +222,7 @@ module testbench();
 		reset = 1;
 		#(delay);
 		reset = 0;
-		btnn = 1'b1;
+		btn = 1'b1;
 		#(delay*(tRESET+tVERDE1+tAMAR1+tVERDE2+tAMAR2+tVERDE3+tROJO)*FPGAFREQ*2);
 		$stop;
 	end
