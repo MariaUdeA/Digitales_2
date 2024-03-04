@@ -222,11 +222,7 @@ module testbench();
 		reset = 1;
 		#(delay);
 		reset = 0;
-		
-		btn = 1'b0;
-		#(delay);
 		btn = 1'b1;
-		
 		#(delay*(tRESET+tVERDE1+tAMAR1+tVERDE2+tAMAR2+tVERDE3+tROJO)*FPGAFREQ*2);
 		$stop;
 	end
