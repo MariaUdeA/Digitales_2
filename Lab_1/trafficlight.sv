@@ -199,31 +199,27 @@ module testbench();
 	              (clk,~reset,~btn, main_lights, sec_lights, p_lights, btn_pressed, Seg0, Seg1);
 	// Simulación
 	initial begin
-		//ciclo sin botón
-		/*
+	
+		//ciclo sin botón	
 		clk = 0;
 		reset = 1;
 		#(delay);
 		reset = 0;
-		#(delay*(tRESET+tVERDE1+tAMAR1+tVERDE2+tAMAR2)*FPGAFREQ*2);*/
+		#(delay*(tRESET+tVERDE1+tAMAR1+tVERDE2+tAMAR2)*FPGAFREQ*2);
 		
-		//Ciclo con botón en rst y afuera
-		/*clk = 0;
-		reset = 1;
-		btn=0;
-		#(delay);
-		reset = 0;
-		btn=1;
-		#(delay);
-		btn =0;
-		#(delay*(tVERDE2+tAMAR2)*FPGAFREQ*2);*/
+		//ciclo con botón
 
-		clk = 0;
+		/* clk = 0;
 		reset = 1;
 		#(delay);
 		reset = 0;
+		
+		btn = 1'b0;
+		#(delay);
 		btn = 1'b1;
-		#(delay*(tRESET+tVERDE1+tAMAR1+tVERDE2+tAMAR2+tVERDE3+tROJO)*FPGAFREQ*2);
+		
+		#(delay*(tRESET+tVERDE1+tAMAR1+tVERDE2+tAMAR2+tVERDE3+tROJO)*FPGAFREQ*2);*/ 
+		
 		$stop;
 	end
 	
