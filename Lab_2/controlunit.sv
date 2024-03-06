@@ -1,13 +1,14 @@
 // *******************
 // Control Unit Module
 // *******************
+
 module controlunit (clk, reset, loaddata, inputdata_ready);
 	input logic  clk, reset;
 	output logic  loaddata;
 	input logic inputdata_ready;
 
 	// Internal signals for state machine
-	typedef enum logic [1:0] {s_loaddata, s_multiply} State;
+	typedef enum logic [1:0] {s_loaddata, s_sum} State;
 	State currentState, nextState;
 
 	// Process (Sequential): update currentState
@@ -22,11 +23,11 @@ module controlunit (clk, reset, loaddata, inputdata_ready);
 		case (currentState)
 			s_loaddata:
 				if (inputdata_ready)
-					nextState = s_multiply;
+					nextState = s_sum;
 				else
 					nextState = s_loaddata;
-			s_multiply:
-				nextState = s_multiply;
+			s_sum:
+				nextState = s_sum;
 		endcase
 
 	// Process (Combinational): update outputs 
@@ -34,7 +35,7 @@ module controlunit (clk, reset, loaddata, inputdata_ready);
 		case (currentState)
 			s_loaddata:
 				loaddata = 1'b1;
-			s_multiply:
+			s_sum:
 				loaddata = 1'b0;
 		endcase
 endmodule

@@ -4,6 +4,7 @@
 module datapathunit (clk, reset, enter, inputdata,
 						   loaddata, inputdata_ready,
 						   disp3, disp2, disp1, disp0);
+	
 	input logic  clk, reset, enter;
 	input logic  [7:0] inputdata;
 	input logic  loaddata;
