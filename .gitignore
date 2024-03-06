@@ -1,11 +1,19 @@
 
 ### Folders
 
-videos
-cache
+/**/incremental_db
+/**/output_files
+/**/simulation
+/**/synthesis
+/**/synthesis_output
 /**/db
 /**/devkits
 
 /**/*.qpf
+/**/*.v
+/**/*.json
+/**/*.bak
+/**/*.rpt
+/**/*.qdf
 
 
