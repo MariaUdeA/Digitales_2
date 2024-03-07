@@ -54,6 +54,7 @@ set_location_assignment PIN_A16 -to Seg1[7]
 set_location_assignment PIN_C14 -to Seg0[0]
 set_location_assignment PIN_E15 -to Seg0[1]
 set_location_assignment PIN_E16 -to Seg0[4]
+set_global_assignment -name BOARD "MAX 10 DE10 - Lite"
 set_location_assignment PIN_C15 -to Seg0[2]
 set_location_assignment PIN_C16 -to Seg0[3]
 set_location_assignment PIN_D17 -to Seg0[5]

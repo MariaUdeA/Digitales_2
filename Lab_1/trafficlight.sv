@@ -13,6 +13,8 @@ module trafficlight #(FPGAFREQ = 50_000_000, tVERDE1 = 18, tAMAR1 = 4, tVERDE2 =
 	output logic btn_pressed;			// Luz que indica que el boton fue presionado
 	output logic [7:0] Seg0, Seg1;      // Salida del decodificador
 
+	/* Salidas del deco que despues se niegan*/
+	logic [7:0] tSeg0, tSeg1;
 	/* Circuito para invertir señal de reloj */
 	logic reset;
 	assign reset = ~nreset;
@@ -25,10 +27,12 @@ module trafficlight #(FPGAFREQ = 50_000_000, tVERDE1 = 18, tAMAR1 = 4, tVERDE2 =
 	logic [3:0] unidades; //unidades de entrada al 7segmentos
 	
 	
-	/* Conexión de los display 7 segmentos*/
-	deco7seg_hexa deco0 (unidades, Seg0);
-	deco7seg_hexa deco1 (decenas, Seg1);
-	
+	/* Conexión de los display 7 segmentos y se asigna a la salida*/
+	deco7seg_hexa deco0 (unidades, tSeg0);
+	deco7seg_hexa deco1 (decenas, tSeg1);
+	assign Seg0=~tSeg0;
+	assign Seg1=~tSeg1;
+
 	/* Señales internas para contar segundos a partir del reloj de la FPGA */
 	localparam FREQDIVCNTBITS = $clog2(FPGAFREQ);	// Bits para contador divisor de frecuencia
 	logic [FREQDIVCNTBITS-1:0] cnt_divFreq;			// Contador para generar un (1) segundo 
@@ -59,6 +63,8 @@ module trafficlight #(FPGAFREQ = 50_000_000, tVERDE1 = 18, tAMAR1 = 4, tVERDE2 =
 	always_ff @(posedge clk, posedge reset) begin
 		if (reset) begin
 			btn_pressed = 1'b0;
+		end else if (currentState==Spg) begin
+			btn_pressed=1'b0;
 		end else if(btn) begin
 			if (currentState == Srst) 
 				btn_pressed <= 1'b0;
@@ -163,8 +169,10 @@ module trafficlight #(FPGAFREQ = 50_000_000, tVERDE1 = 18, tAMAR1 = 4, tVERDE2 =
 		Modulo para dividir el cnt_secLeft en decenas y unidades
 		********************************************************************************************* */
 	always_comb begin
-		decenas=4'(cnt_secLeft / 4'b1010); //casting y division entera
-		unidades=4'(cnt_secLeft % 4'b1010); //casting y modulo
+		decenas=4'((cnt_secLeft+1'b1) / 4'b1010); //casting y division entera
+		unidades=4'((cnt_secLeft+1'b1) % 4'b1010); //casting y modulo
+		if (decenas==4'b0000)
+			decenas=4'b1111;
 	end
 	
 	
@@ -179,6 +187,7 @@ module testbench();
 	logic clk, reset, btn;
 	logic [2:0] main_lights, sec_lights;
 	logic [1:0] p_lights;
+	logic [7:0] Seg0, Seg1;
 
 
 
@@ -188,7 +197,7 @@ module testbench();
 	localparam tAMAR1 = 2;
 	localparam tVERDE2 = 2;
 	localparam tAMAR2 = 2;
-	localparam tVERDE3 = 2;
+	localparam tVERDE3 = 3;
 	localparam tROJO = 2;
 	
 	localparam delay = 20ps;
@@ -199,17 +208,15 @@ module testbench();
 	              (clk,~reset,~btn, main_lights, sec_lights, p_lights, btn_pressed, Seg0, Seg1);
 	// Simulación
 	initial begin
-	
-		//ciclo sin botón	
+		//ciclo sin botón peatona
+		/*
 		clk = 0;
 		reset = 1;
 		#(delay);
 		reset = 0;
-		#(delay*(tRESET+tVERDE1+tAMAR1+tVERDE2+tAMAR2)*FPGAFREQ*2);
-		
-		//ciclo con botón
+		#(delay*(tRESET+tVERDE1+tAMAR1+tVERDE2+tAMAR2)*FPGAFREQ*2);*/
 
-		/* clk = 0;
+		clk = 0;
 		reset = 1;
 		#(delay);
 		reset = 0;
@@ -218,8 +225,7 @@ module testbench();
 		#(delay);
 		btn = 1'b1;
 		
-		#(delay*(tRESET+tVERDE1+tAMAR1+tVERDE2+tAMAR2+tVERDE3+tROJO)*FPGAFREQ*2);*/ 
-		
+		#(delay*(tRESET+tVERDE1+tAMAR1+tVERDE2+tAMAR2+tVERDE3+tROJO)*FPGAFREQ*2);
 		$stop;
 	end
 	
