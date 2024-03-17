@@ -31,6 +31,7 @@ module peripherals (clk, reset, enter, inputdata,
 			dataoutput_i <= dataoutput_i + 2'b1;
 		end
 	end
+	
 	assign inputdata_ready = (datainput_i == 4'd8) ? 1'b1 : 1'b0;
 	
 	// Internal signals and module instantiation for getting operands
@@ -54,8 +55,8 @@ module peripherals (clk, reset, enter, inputdata,
 				valuestoshowondisps[15:12] = 4'b1011;	// B0 - B3
 		end else begin
 			valuestoshowondisps[15:12] = 4'b1100;
-			valuestoshowondisps[11:8] = {2'b0, dataoutput_i};
-			valuestoshowondisps[7:0] = dataR[dataoutput_i*8 +: 8];
+			valuestoshowondisps[11:8] = {2'b0, ~dataoutput_i};
+			valuestoshowondisps[7:0] = dataR[~dataoutput_i*8 +: 8];
 		end
 	end
 endmodule

@@ -109,23 +109,29 @@ module adderunit (dataA, dataB, dataR);
 					dataR=dataB;
 				end
 			end
-		end if ((dataA[30:0]==31'b0) || (dataB[30:0]==31'b0)) begin // revisa si alguno es 0
-			if((dataA[30:0]==31'b0) && (dataB[30:0]==31'b0)) begin
+		end else begin
+			if ((dataA[30:0]==dataB[30:0]) && (sign_sum==1'b1)) begin // revisa si las mantisas son iguales pero con signos distintos
+				dataR=32'b0;
+			end
+		end
+		
+		
+		if ((dataA[30:0]==31'b0) || (dataB[30:0]==31'b0)) begin // revisa si alguno es 0
+			if((dataA[30:0]==31'b0) && (dataB[30:0]==31'b0)) begin //revisa si ambos son ceros
 				dataR=32'h00000000;
-			end if(dataA[30:0]==31'b0) begin
+			end if(dataA[30:0]==31'b0) begin //si uno es cero, la salida es el otro
 				dataR=dataB;
 			end else begin
 				dataR=dataB;
 			end
-		end if ((dataA[30:0]==dataB[30:0]) && (sign_sum==1'b1)) begin
-			dataR=32'b0;
 		end
 	end
 endmodule
 
-/* ****************
+ /* ****************
 	Módulo testbench 
 	**************** */
+
 module testbench();
 	/* Declaración de señales y variables internas */
    logic [31:0] dataA, dataB, dataR;
@@ -133,7 +139,6 @@ module testbench();
 	
 	localparam delay = 20ps;
 	adderunit tb(dataA, dataB, dataR);
-
 	// Simulación
 	initial begin
 	// suma de mayor negativo y menor positivo
