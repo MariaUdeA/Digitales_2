@@ -10,13 +10,16 @@ module peripheral_getoperands (clk, reset, inputdata, enterpulse, datainput_i, d
 
 	// Internal signals to store data
 	logic [63:0] reg_datainput;
+	logic [3:0] data_input_juanita;
+	
+	assign data_input_juanita = {datainput_i[3:2], ~datainput_i[1:0]}; 
 	
 	// Process: store data into reg_datainput
 	always_ff @(posedge reset, posedge clk) begin
 		if (reset) begin
 			reg_datainput <= 0;
-		end else if (datainput_i < 8) begin
-			reg_datainput[(datainput_i*8) +: 8] <= inputdata;
+		end else if (data_input_juanita < 8) begin
+			reg_datainput[(data_input_juanita*8) +: 8] <= inputdata;
 		end
 	end
 	

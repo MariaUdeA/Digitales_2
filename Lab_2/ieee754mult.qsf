@@ -39,7 +39,7 @@
 
 set_global_assignment -name FAMILY "MAX 10"
 set_global_assignment -name DEVICE 10M50DAF484C6GES
-set_global_assignment -name TOP_LEVEL_ENTITY top
+set_global_assignment -name TOP_LEVEL_ENTITY adderunit
 set_global_assignment -name ORIGINAL_QUARTUS_VERSION 22.1STD.2
 set_global_assignment -name PROJECT_CREATION_TIME_DATE "21:30:01  SEPTEMBER 02, 2023"
 set_global_assignment -name LAST_QUARTUS_VERSION "22.1std.2 Lite Edition"
@@ -103,9 +103,6 @@ set_location_assignment PIN_C20 -to disp3[4]
 set_location_assignment PIN_D19 -to disp3[5]
 set_location_assignment PIN_E17 -to disp3[6]
 set_global_assignment -name SYSTEMVERILOG_FILE adderunit.sv
-set_global_assignment -name PARTITION_NETLIST_TYPE SOURCE -section_id Top
-set_global_assignment -name PARTITION_FITTER_PRESERVATION_LEVEL PLACEMENT_AND_ROUTING -section_id Top
-set_global_assignment -name PARTITION_COLOR 16764057 -section_id Top
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to clk
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to disp0[6]
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to disp0[5]
@@ -145,4 +142,7 @@ set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to inputdata[1]
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to inputdata[0]
 set_instance_assignment -name IO_STANDARD "3.3 V SCHMITT TRIGGER" -to nenter
 set_instance_assignment -name IO_STANDARD "3.3 V SCHMITT TRIGGER" -to nreset
+set_global_assignment -name PARTITION_NETLIST_TYPE SOURCE -section_id Top
+set_global_assignment -name PARTITION_FITTER_PRESERVATION_LEVEL PLACEMENT_AND_ROUTING -section_id Top
+set_global_assignment -name PARTITION_COLOR 16764057 -section_id Top
 set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top

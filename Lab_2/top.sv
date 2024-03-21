@@ -27,7 +27,7 @@ endmodule
 	Módulo testbench 
 	**************** */
 
-
+/*
 module testbench();
 	
 	logic clk = 0;
@@ -49,16 +49,9 @@ module testbench();
 	nenter = 1'b0;
 	#((delay)*2);
 	
-	//**********************DATO A***************************************//
-	//Dato A0
-	inputdata = 8'h00;
-	nenter = 1'b1;
-	#((delay)*2)
-	nenter = 1'b0;
-	#((delay)*2)
-	
-	//Dato A1
-	inputdata = 8'h00;
+	//**********************DATO A***************************************
+	//Dato A3
+	inputdata = 8'h3f;
 	nenter = 1'b1;
 	#((delay)*2)
 	nenter = 1'b0;
@@ -69,26 +62,26 @@ module testbench();
 	nenter = 1'b1;
 	#((delay)*2)
 	nenter = 1'b0;
+	#((delay)*2)
 	
-	//Dato A3
+	//Dato A1
+	inputdata = 8'h00;
+	nenter = 1'b1;
+	#((delay)*2)
+	nenter = 1'b0;
+	
+	//Dato A0
+	inputdata = 8'h00;
+	nenter = 1'b1;
+	#((delay)*2)
+	nenter = 1'b0;
+	#((delay)*2)
+	
+	
+	//**********************DATO B***************************************
+	
+	//Dato B3
 	inputdata = 8'h3f;
-	nenter = 1'b1;
-	#((delay)*2)
-	nenter = 1'b0;
-	#((delay)*2)
-	
-	
-	//**********************DATO B***************************************//
-	
-	//Dato B0
-	inputdata = 8'h00;
-	nenter = 1'b1;
-	#((delay)*2)
-	nenter = 1'b0;
-	#((delay)*2)
-	
-	//Dato B1
-	inputdata = 8'h00;
 	nenter = 1'b1;
 	#((delay)*2)
 	nenter = 1'b0;
@@ -99,9 +92,16 @@ module testbench();
 	nenter = 1'b1;
 	#((delay)*2)
 	nenter = 1'b0;
+	#((delay)*2)
 	
-	//Dato B3
-	inputdata = 8'h3f;
+	//Dato B1
+	inputdata = 8'h00;
+	nenter = 1'b1;
+	#((delay)*2)
+	nenter = 1'b0;
+	
+	//Dato B0
+	inputdata = 8'h00;
 	nenter = 1'b1;
 	#((delay)*2)
 	nenter = 1'b0;
@@ -134,5 +134,5 @@ module testbench();
 
 	// Generador del reloj
 	always #((delay)/2)clk = ~clk;
-endmodule 
+endmodule */
 

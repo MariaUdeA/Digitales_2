@@ -59,9 +59,9 @@ module adderunit (dataA, dataB, dataR);
 	always_comb begin
 		if (sign_sum == 1) begin  // si los signos son diferentes, se restan las mantisas
 			if (mantissa_A>mantissa_B) begin
-				mantissa_sum = {1'b0, mantissa_A} - {1'b0, mantissa_B};
+				mantissa_sum = {1'b0, mantissa_A} + {1'b1, ~mantissa_B+1'b1};
 			end else
-				mantissa_sum = {1'b0, mantissa_B} - {1'b0, mantissa_A};
+				mantissa_sum = {1'b0, mantissa_B} + {1'b1, ~mantissa_A+1'b1};
 		
 		end else  // si los signos son iguales, se suman las mantisas
 			mantissa_sum = {1'b0, mantissa_A} + {1'b0, mantissa_B};
@@ -87,15 +87,15 @@ module adderunit (dataA, dataB, dataR);
 			mantissa_norm=mantissa_sum>>1;
 			exp_sum_r=exp_sum+1'b1;		
 		end else begin
-			mantissa_norm=mantissa_sum<<(5'b10111-bitshift); // normalizar si se disminuye la posición de 1
-			exp_sum_r=exp_sum-(5'b10111-bitshift);
+			mantissa_norm=mantissa_sum<<(5'b10111+(~bitshift+1'b1)); // normalizar si se disminuye la posición de 1
+			exp_sum_r=exp_sum-(5'b10111+(~bitshift+1'b1));
 		end	
 		dataR[30:23]=exp_sum_r;
 		dataR[31] = sign_sum_out;
 		dataR[22:0]=mantissa_norm[22:0];
 
 		//casos especiales
-		if((exp_A==8'b11111111) || (exp_B==8'b11111111))begin //revisa si alguno es infinito
+		if((exp_A==8'b11111111 && dataA[22:0]==23'b0) || (exp_B==8'b11111111 && dataB[22:0]==23'b0))begin //revisa si alguno es infinito
 			if((exp_A==8'b11111111) && (exp_B==8'b11111111))begin //revisa si ambos son infinitos
 				if(sign_sum)begin
 					dataR=32'h7fc00000; //si son ambos infinitos con signo contrario, la salida es NaN
@@ -116,13 +116,21 @@ module adderunit (dataA, dataB, dataR);
 		end
 		
 		
+		if ((exp_A==8'b11111111 && dataA[22:0]!=23'b0) || (exp_B==8'b11111111 && dataB[22:0]!=23'b0))begin
+			if(exp_A==8'b11111111 && dataA[22:0]!=23'b0) begin
+				dataR=dataA;
+			end if(exp_B==8'b11111111 && dataB[22:0]!=23'b0)begin
+				dataR=dataB;
+			end
+		end
+		
 		if ((dataA[30:0]==31'b0) || (dataB[30:0]==31'b0)) begin // revisa si alguno es 0
 			if((dataA[30:0]==31'b0) && (dataB[30:0]==31'b0)) begin //revisa si ambos son ceros
 				dataR=32'h00000000;
 			end if(dataA[30:0]==31'b0) begin //si uno es cero, la salida es el otro
 				dataR=dataB;
 			end else begin
-				dataR=dataB;
+				dataR=dataA;
 			end
 		end
 	end
@@ -131,4 +139,45 @@ endmodule
  /* ****************
 	Módulo testbench 
 	**************** */
+
+module testbench();
+	// Declaración de señales y variables internas
+	logic [31:0] dataA, dataB, dataR;
+
+
+	localparam delay = 20ps;
+	adderunit tb(dataA, dataB, dataR);
+
+	// Simulación
+	initial begin
+	// suma de mayor negativo y menor positivo
+	dataA=32'h45192000; // -7.875
+	dataB=32'hbf651eb8; //0.1875
+	#(delay*2);
+	
+	// suma de +inf - inf
+	dataA=32'h3dcb7382; // inf
+	dataB=32'hbe970a3d; // -inf
+	#(delay*2);
+	
+	// suma de 0 - inf
+	dataB=32'h80000000; // +0
+	dataA=32'h40fe0000; // 
+	#(delay*2);
+	
+	//suma de -7.875 y 7.9375	
+	dataA=32'h40fe0000; // 7.9375
+	dataB=32'hc0fc0000; // -7.875
+	#(delay*2); //res 3d800000
+	
+	//suma de -7.875 y 7.875	
+	dataA=32'h40fc0000; // 7.875
+	dataB=32'hc0fc0000; // -7.875
+	#(delay*2); //res 3d800000	
+	//suma de 7.875 y 7.875	
+	dataA=32'h40fc0000; // 7.875
+	dataB=32'h40fc0000; // 7.875
+	#(delay*2); //res 3d800000	
+	end
+endmodule
 
