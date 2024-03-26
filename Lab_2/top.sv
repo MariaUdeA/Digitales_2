@@ -49,6 +49,7 @@ module testbench();
 	enter = 1'b0;
 	#((delay)*2);
 	
+	
 	//**********************DATO A***************************************
 	//Dato A3
 	inputdata = 8'hc1;
@@ -108,6 +109,8 @@ module testbench();
 	#((delay)*2)
 	enter = 1'b0;
 	#((delay)*2)
+	enter = 1'b0;
+	#((delay)*3)
 	
 	
 	enter = 1'b1;
@@ -127,6 +130,24 @@ module testbench();
 	enter = 1'b0;
 	#((delay)*2)
 	
+	//Dato R
+	/*enter = 1'b1;
+	#((delay)*2)
+	enter = 1'b0;
+	#((delay)*2)
+	enter = 1'b1;
+	#((delay)*2)
+	enter = 1'b0;
+	#((delay)*2)
+	enter = 1'b1;
+	#((delay)*2)
+	enter = 1'b0;
+	#((delay)*2)
+	enter = 1'b1;
+	#((delay)*2)
+	enter = 1'b0;
+	#((delay)*4)
+	*/
 	
 	$stop;
 	
