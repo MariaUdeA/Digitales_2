@@ -45,6 +45,9 @@ module testbench();
 	reset = 1'b1;
 	#((delay)*2);
 	reset = 1'b0;
+	enter=1'b0;
+	#((delay)*2);
+	
 	
 	//**********************DATO A***************************************
 	//Dato A3
@@ -105,12 +108,12 @@ module testbench();
 	enter = 1'b1;
 	#((delay)*2)
 	enter = 1'b0;
-	#((delay)*2)
+	#((delay)*3)
 	
 	
 	
 	//Dato R
-	enter = 1'b1;
+	/*enter = 1'b1;
 	#((delay)*2)
 	enter = 1'b0;
 	#((delay)*2)
@@ -125,8 +128,8 @@ module testbench();
 	enter = 1'b1;
 	#((delay)*2)
 	enter = 1'b0;
-	#((delay)*2)
-	
+	#((delay)*4)
+	*/
 	
 	$stop;
 	
