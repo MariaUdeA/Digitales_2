@@ -139,7 +139,7 @@ endmodule
  /* ****************
 	Módulo testbench 
 	**************** */
-
+/*
 module testbench();
 	// Declaración de señales y variables internas
 	logic [31:0] dataA, dataB, dataR;
@@ -180,4 +180,5 @@ module testbench();
 	#(delay*2); //res 3d800000	
 	end
 endmodule
+*/
 
