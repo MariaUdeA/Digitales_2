@@ -3,21 +3,22 @@
 	.text
 
 _start:
-	 	
+
 	 LDR R4, =N
 	 LDR R4, [R4] // carga de valor de N
-	 
+	 LDR R5, =SortedValues
+
 	 LDR R9, =a1
 	 LDR R9, [R9]
 	 	 
 	 //Interrupción cuando el N es menor a 5
 	 CMP R4, #5
-	 STRLO R9, [R2]
+	 STRLO R9, [R5]
 	 BLO _stop
 	 	 
 	 //Interrupción cuando N es mayor a 30
 	 CMP R4, #30
-	 STRHI R9, [R2]
+	 STRHI R9, [R5]
 	 BHI _stop
 	  
 	//organizar POS
@@ -26,7 +27,7 @@ _start:
 	LDR R9, [R9]
 
 	LDR R3, =POS			//Carga de POS
-    sub r8, r4,#1       // para comparar con n-1
+    sub R8, R4,#1       // para comparar con n-1
 	
 	//organizacion
 	bubble_up:
@@ -73,7 +74,7 @@ _start:
     										@ Sorted array is now in Array
 	// elige el valor máximo para hacer vector
 	
-	cmp r9,#1 //revisa el orden
+	cmp r9,#1 		//revisa el orden
 	moveq R1, R2    //el valor mayor de pos en la pos mayor
 	ldreq R10, [R3] //el valor menor de pos en la pos menor
 	
@@ -97,22 +98,7 @@ _start:
 	BLO _stop
 	
 	//Generar los valores de la serie de fibonnacci.
-	Fibo:
-		MOV R2, #0
-		STR R2, [R0], #4
-		MOV R2, #1
-		STR R2, [R0], #4
-		//STR R2, [R0], #4
-		SUB R1, R1, #2
-
-	Loop:
-		LDR R2, [R0, #-8]
-		LDR R3, [R0, #-4]
-		ADD R3, R2, R3
-		STR R3, [R0], #4
-	
-		SUBS R1, R1, #1
-		BNE Loop
+	BL Fibo
 
 	//Carga de los datos
 	LDR R0, =vector
@@ -134,7 +120,23 @@ _start:
 		B WHILE	
 _stop:
  B _stop
+ 
+Fibo:
+	MOV R2, #0
+	STR R2, [R0], #4
+	MOV R2, #1
+	STR R2, [R0], #4
+	SUB R1, R1, #2
 
+	Loop:
+		LDR R2, [R0, #-8]
+		LDR R3, [R0, #-4]
+		ADD R3, R2, R3
+		STR R3, [R0], #4
+	
+		SUBS R1, R1, #1
+		BNE Loop
+	MOV pc, lr
 
  .data 
  /*
@@ -143,6 +145,6 @@ _stop:
 a1: 			.DC.L 0xA5A5A5A5
 N:				.DC.L 5
 POS:			.DC.L 12,9,5,8,4 //salida: 2,3,13,21,89 
-ORDER:			.DC.L 0
+ORDER:			.DC.L 1
 vector:			.DS.L MAXN
 SortedValues:	.DC.L MAXN
