@@ -15,5 +15,6 @@
 /**/*.bak
 /**/*.rpt
 /**/*.qdf
+/**/*.DS_store
 /**/*.sv.bak
 
