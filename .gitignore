@@ -9,7 +9,6 @@
 /**/db
 /**/devkits
 
-
 /**/*.v
 /**/*.json
 /**/*.bak
@@ -18,3 +17,4 @@
 /**/*.DS_store
 /**/*.sv.bak
 
+.DS_Store
