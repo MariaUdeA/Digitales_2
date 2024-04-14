@@ -9,11 +9,12 @@
 /**/db
 /**/devkits
 
-
 /**/*.v
 /**/*.json
 /**/*.bak
 /**/*.rpt
 /**/*.qdf
+/**/*.DS_store
 /**/*.sv.bak
 
+.DS_Store
