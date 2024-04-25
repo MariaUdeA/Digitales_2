@@ -1,5 +1,5 @@
 .global _start
-	.equ MAXN, 40
+	.equ MAXN, 90
 	.text
 
 _start:
@@ -28,7 +28,17 @@ _start:
 	 CMP R4, #50
 	 STRHI R9, [R5]
 	 BHI _stop
-	  
+	 
+	//Interrupción cuando ORDER es mayor a 1
+	 CMP R7, #1
+	 STRHI R9, [R5]
+	 BHI _stop
+	 
+	//Interrupción cuando ORDER es menor a 0
+	 CMP R7, #0
+	 STRLO R9, [R5]
+	 BLO _stop
+	 
 	//organizar POS usando sort
 	//Primero se mira si el orden es ascendente o descendente
 	mov R0, R4	     		//N
@@ -83,8 +93,8 @@ _start:
 		LDR R3, [R12],#4		    //se carga en R2 lo que hay en [vector] + r1*4
 		LDR R2, [R12],#4  		    //se carga eL siguiente valor
 		
-		STR R3, [R5], #4  			//se escribe en sorted values lo que hay en r6
-		STR R2, [R5], #4  			//se escribe en sorted values lo que hay en r6	
+		STR R2, [R5], #4  			//se escribe en sorted values lo que hay en r6
+		STR R3, [R5], #4  			//se escribe en sorted values lo que hay en r6	
 
 		ADD R0, R0, #1 				//para finalizar
 		B WHILE	
@@ -212,7 +222,7 @@ Sort:
  */
 a1: 			.DC.L 0xA5A5A5A5
 N:				.DC.L 10
-POS:			.DC.L 1,3,1,2,5, 10,12,2,3,2 //salida: 2,3,13,21,89 
-ORDER:			.DC.L 1
+POS:			.DC.L 90,62,59,15,31,54,57,73,10,60 //salida: 2,3,13,21,89 
+ORDER:			.DC.L 0
 vector:			.DS.L MAXN
 SortedValues:	.DS.L MAXN
