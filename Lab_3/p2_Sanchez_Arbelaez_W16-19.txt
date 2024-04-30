@@ -1,0 +1,2 @@
+github: https://github.com/jusanchez6/Digitales_2.git
+entrega: 690f8cb
