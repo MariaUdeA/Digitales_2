@@ -39,6 +39,7 @@ module decoder(input logic [1:0] Op,
 				4'b0010: ALUControl = 2'b01; // SUB
 				4'b0000: ALUControl = 2'b10; // AND
 				4'b1100: ALUControl = 2'b11; // ORR
+				4'b1101: ALUControl = 2'b11; // SE REALIZA UNA OR EN CASO DE QUE HAYA UNA OPERACIÓN DE SHIFT
 				default: ALUControl = 2'bx; // unimplemented
 			endcase
 
