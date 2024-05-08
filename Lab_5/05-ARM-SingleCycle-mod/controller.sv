@@ -8,11 +8,11 @@ module controller(input logic clk, reset,
 						output logic RegWrite,
 						output logic [1:0] ImmSrc,
 						output logic ALUSrc,
-						output logic [1:0] ALUControl,
+						output logic [2:0] ALUControl,		//Agregar un bit para crear más condiciones
 						output logic MemWrite, MemtoReg,
 						output logic PCSrc);
 	logic [1:0] FlagW;
-	logic PCS, RegW, MemW;
+	logic PCS, RegW, MemW, NoWrite;
 
 	decoder dec(Instr[27:26], Instr[25:20], Instr[15:12],
 					FlagW, PCS, RegW, MemW,

@@ -6,7 +6,7 @@ module datapath(input logic clk, reset,
 					 input logic RegWrite,
 					 input logic [1:0] ImmSrc,
 					 input logic ALUSrc,
-					 input logic [1:0] ALUControl,
+					 input logic [2:0] ALUControl,	//Se agrega un bit para ampliar la ALUs
 					 input logic MemtoReg,
 					 input logic PCSrc,
 					 output logic [3:0] ALUFlags,
