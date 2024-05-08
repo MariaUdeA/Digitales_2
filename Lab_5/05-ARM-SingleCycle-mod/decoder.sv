@@ -32,10 +32,13 @@ module decoder(input logic [1:0] Op,
 		endcase
 		
 	assign {RegSrc, ImmSrc, ALUSrc, MemtoReg, RegW, MemW, Branch, ALUOp} = controls;
-
+	 
+	
 	// ALU Decoder
-	always_comb
+	always_comb begin
+		
 		NoWrite = (Funct[4:1] == 4'b1010);	//Si es 1 hace la resta pero no escribe
+		
 		
 		if (ALUOp) begin // which DP Instr?
 			case(Funct[4:1])
@@ -55,7 +58,7 @@ module decoder(input logic [1:0] Op,
 				ALUControl = 3'b000; // add for non-DP instructions
 				FlagW = 3'b000; // don't update Flags
 			end
-			
+		end
 	// PC Logic
 	assign PCS = ((Rd == 4'b1111) & RegW) | Branch;
 endmodule
