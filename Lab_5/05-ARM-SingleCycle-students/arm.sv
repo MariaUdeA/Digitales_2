@@ -12,8 +12,9 @@ module arm(input logic clk, reset,
 	// Internal signals to interconnect the control and datapath units
 	logic [3:0] ALUFlags;
 	logic RegWrite, ALUSrc, MemtoReg, PCSrc;
-	logic [1:0] RegSrc, ImmSrc, ALUControl;
-
+	logic [1:0] RegSrc, ImmSrc;
+	logic [2:0] ALUControl;		// Se agrega un bit para el caso del bypass
+	
 	// Control unit instantiation
 	controller c(clk, reset, Instr[31:12], ALUFlags,
 						RegSrc, RegWrite, ImmSrc,

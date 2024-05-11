@@ -16,7 +16,7 @@ module dmem(input logic clk, we, input logic [31:0] a, wd, output logic [31:0] r
 	
 	// Process for reading from RAM array or peripherals mapped in memory
 	always_comb
-		if (a == 32'hC000_0000)			// Read from Switches (10-bits)
+		if (a == 32'hC000_0008)			// Read from Switches (10-bits)
 			rd = {22'b0, switches};
 		else									// Reading from 0 to 252 retrieves data from RAM array
 			rd = RAM[a[31:2]]; 			// Word aligned (multiple of 4)
@@ -24,7 +24,7 @@ module dmem(input logic clk, we, input logic [31:0] a, wd, output logic [31:0] r
 	// Process for writing to RAM array or peripherals mapped in memory
 	always_ff @(posedge clk) begin
 		if (we)
-			if (a == 32'hC000_0004)	// Write into LEDs (10-bits)
+			if (a == 32'hC000_000c)	// Write into LEDs (10-bits)
 				leds <= wd[9:0];
 			else	
 				RAM[a[31:2]] <= wd;

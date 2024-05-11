@@ -8,17 +8,18 @@ module controller(input logic clk, reset,
 						output logic RegWrite,
 						output logic [1:0] ImmSrc,
 						output logic ALUSrc,
-						output logic [2:0] ALUControl,		//Agregar un bit para crear más condiciones
+						output logic [2:0] ALUControl,		//Se agrega el otro caso
 						output logic MemWrite, MemtoReg,
 						output logic PCSrc);
 	logic [1:0] FlagW;
-	logic PCS, RegW, MemW, NoWrite;
+	logic PCS, RegW, MemW;
+	logic NoWrite;
 
 	decoder dec(Instr[27:26], Instr[25:20], Instr[15:12],
-					FlagW, PCS, RegW, MemW,
+					NoWrite, FlagW, PCS, RegW, MemW,
 					MemtoReg, ALUSrc, ImmSrc, RegSrc, ALUControl);
 
-	condlogic cl(clk, reset, Instr[31:28], ALUFlags,
+	condlogic cl(clk, reset, NoWrite, Instr[31:28], ALUFlags,
 					FlagW, PCS, RegW, MemW,
 					PCSrc, RegWrite, MemWrite);
 

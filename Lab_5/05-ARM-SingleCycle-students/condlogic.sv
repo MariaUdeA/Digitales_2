@@ -1,7 +1,7 @@
 /*
  * This module is the Conditional Logic block of the Control Unit
  */ 
-module condlogic(input logic clk, reset, NoWrite,
+module condlogic(input logic clk, reset, NoWrite, 
 						input logic [3:0] Cond,
 						input logic [3:0] ALUFlags,
 						input logic [1:0] FlagW,
@@ -19,8 +19,8 @@ module condlogic(input logic clk, reset, NoWrite,
 	// write controls are conditional
 	condcheck cc(Cond, Flags, CondEx);
 	assign FlagWrite = FlagW & {2{CondEx}};
-	// assign RegWrite = RegW & CondEx;
-	assign RegWrite = RegW & CondEx & (~NoWrite);
+
+	assign RegWrite = RegW & CondEx & (~NoWrite); 	// Para prevenir escribir Rd durante CMP
 	assign MemWrite = MemW & CondEx;
 	assign PCSrc = PCS & CondEx;
 endmodule

@@ -4,14 +4,12 @@
 module testbench_peripherals();
 	logic clk;
 	logic reset;
-	logic [31:0] WriteData, DataAdr;
 	logic [9:0] switches, leds;
-	logic MemWrite;
 
 	localparam DELAY = 10;
 	
 	// instantiate device to be tested
-	top dut(clk, reset, WriteData, DataAdr, MemWrite, switches, leds);
+	top dut(clk, reset, switches, leds);
 
 	// initialize test
 	initial

@@ -2,8 +2,6 @@
  * This module is the TOP of the ARM single-cycle processor
  */ 
 module top(input logic clk, nreset,
-			  output logic [31:0] WriteData, DataAdr,
-			  output logic MemWrite,
 			  input logic [9:0] switches,
 			  output logic [9:0] leds);
 
@@ -11,6 +9,8 @@ module top(input logic clk, nreset,
 	logic reset;
 	assign reset = ~nreset;
 	logic [31:0] PC, Instr, ReadData;
+	logic [31:0] WriteData, DataAdr;
+	logic MemWrite;
 	
 	// Instantiate instruction memory
 	imem imem(PC, Instr);
@@ -20,4 +20,5 @@ module top(input logic clk, nreset,
 
 	// Instantiate processor
 	arm arm(clk, reset, PC, Instr, MemWrite, DataAdr, WriteData, ReadData);
+	
 endmodule
