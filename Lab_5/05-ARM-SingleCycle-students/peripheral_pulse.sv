@@ -1,6 +1,7 @@
 // **********************
 // Pulse Generator Module
 // **********************
+
 module peripheral_pulse(input logic d, clk, reset, 
 								output logic pulse);
 	// Internal signals: outputs from each Flip Flop
