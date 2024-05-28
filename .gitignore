@@ -8,6 +8,8 @@
 /**/synthesis_output
 /**/db
 /**/devkits
+/**/build
+
 
 /**/*.v
 /**/*.json
