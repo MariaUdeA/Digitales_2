@@ -1,7 +1,7 @@
 /**
- * @file main.s
+ * @file gpio.s
  *
- * @brief Archivo principal del programa
+ * @brief Contiene las funciones para el control de GPIO
  */
 
 // Definiciones generales
@@ -16,13 +16,14 @@
  * Función que inicia el modulo GPIO
  * Paramtros:
  * R0: GPIO_NUM
+ * R1: FUNCSEL 
  */
 
 .global gpio_init_asm
 gpio_init_asm:
-    PUSH    {R0, LR}
+    PUSH    {R0, R1, LR}
     BL      release_reset_IO_bank
-    POP     {R0}
+    POP     {R0, R1}
     BL      setFunctionGPIO
     POP     {PC}
 
@@ -31,41 +32,53 @@ gpio_init_asm:
  *@brief release_reset_IO_BANK
  *
  * Esta función realiza el reset de IOBANK
- * parametros: none 
+ * parametros:
+ * NONE
  */
-.equ    RESETS_BASE, 0x4000C000
+.equ    RESETS_BASE,        0x4000C000
 .equ    RESETS_DONE_OFFSET, 0x08
-.equ    IO_BANK0_BITMASK, 0x20                  // coloca un 1 en el bit 5 de la dirección de reset, lo cual es un 1 en el offset de IOBANK0
+.equ    IO_BANK0_BITMASK,   0x20                  // coloca un 1 en el bit 5 de la dirección de reset, lo cual es un 1 en el offset de IOBANK0
+.equ    PWM_BITMASK,        0x4000 
 
 .global release_reset_IO_bank
 release_reset_IO_bank:
     LDR     R0, =(RESETS_BASE+ATOMIC_CLR)       // Dirección para el reset atomic clear
     MOV     R1, #IO_BANK0_BITMASK               // CARGAR LA MASCARA DE BIT 
+    LDR     R2, =(PWM_BITMASK)                  // CARGAR LA MASCARA DE BIT PARA PWM
     STR     R1, [R0]                            // REALIZA EL RESET EN IOBANK0: 5
+    STR     R2, [R0]
     LDR     R0, =(RESETS_BASE)                  // DIRECCIÓN BASE DEL RESET
-    
+     
+
 rstiobank0done:
-    LDR     R1, [R0, #RESETS_DONE_OFFSET]       // Carga la dirección del resetDone para checkear que se haya resetado       
+    LDR     R1, [R0, #RESETS_DONE_OFFSET]       // Carga la dirección del resetDone para checkear que se haya resetado     
     MOV     R2, #IO_BANK0_BITMASK               // Carga la mascara de bit para el reset de IOBANK0
     AND     R1, R1, R2                          // checkea que el reset se haya realizado
     BEQ     rstiobank0done                      // MIENTRAS LA OPERACIÓN AND SEA DIFERENTE DE CERO EL RESET NO SE HA COMPLETADO
-    BX      LR                                  // RETORNA LA FUNCIÓN
+
+rstPWMdone:
+    LDR     R1, [R0, #RESETS_DONE_OFFSET]       // Carga la dirección del resetDone para checkear que se haya resetado
+    LDR     R2, =(PWM_BITMASK)                  // Carga la mascara de bit para el reset de IOBANK0
+    AND     R1, R1, R2                          // checkea que el reset se haya realizado
+    BEQ     rstiobank0done                      // MIENTRAS LA OPERACIÓN AND SEA DIFERENTE DE CERO EL RESET NO SE HA COMPLETADO
+    BX      LR    
 
 
 /* @brief setFunctionGPIO.
  * 
  * Esta función selecciona la función GPIO
  * para los GPIOx
- * Parametros: GPIO_NUM
+ * Parametros: 
+ * R0: GPIO_NUM
+ * R1: FUNCSEL
  */
 .equ IO_BANK0_BASE, 0x40014000      // BASE DEL REGISTRO IOBANK0
 .equ CTRL_OFFSET,   0x04            // OFFSET DE LA DIRECCIÓN DE CONTROL IOBANK0
-.equ FUNCSEL_IO,    0x05            // OFFSET PARA SELECCIONAR LA FUNCIÓN SIO EN FUNCSEL
+
 
 .global setFunctionGPIO
 setFunctionGPIO:
     LDR     R2, =(IO_BANK0_BASE+CTRL_OFFSET)        // DIRECCIÓN BASE DE GPIOx_CTRL
-    MOV     R1, #FUNCSEL_IO                         // CARGA EN R1: 5, VALOR DE SIO PARA LOS GPIO
     LSL     R0, R0, #3                              // MOVIMIENTO DIABOLICO QUE MAGICAMENTE ME LLEVA A LA DIRECCIÓN DE CONTROL DEL GPIOx
     STR     R1, [R2, R0]                            // GUARDA EL VALOR DE FUNCSEL_IO EN EL REGISTRO DE CONTROL DEL GPIOx
     BX      LR
@@ -91,7 +104,7 @@ gpio_set_dir_asm:
     LDR     R0, =SIO_BASE                   // SE CARGA LA DIRECCIÓN BASE DEL REGISTRO SIO
     CMP     R1, #0                          // SI R1=0 EL PIN ES UN INPUT
     BEQ     gpio_set_dir_asm_clr            // SE LIMPIA ESE BIT PARA ACTIVAR EL OUTPUT ENABLE
-    STR     R2, [R0, #GPIO_OE_SET_OFFSET]    // SE INICIALIZA EL GPIO COMO OUTPUT
+    STR     R2, [R0, #GPIO_OE_SET_OFFSET]   // SE INICIALIZA EL GPIO COMO OUTPUT
     BX      LR                              // RETORNA
 
 gpio_set_dir_asm_clr:

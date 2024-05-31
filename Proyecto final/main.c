@@ -6,8 +6,10 @@
 int main() {
 	stdio_init_all();
 
-	gpio_init_asm(LED_PIN);
-	gpio_init_asm(LED_PIN2);
+	pwm_config_asm();
+
+	gpio_init_asm(LED_PIN, FUNCSEL_SIO);
+	gpio_init_asm(LED_PIN2, FUNCSEL_SIO);
 
 	gpio_set_dir_asm(LED_PIN, true);
 	gpio_set_dir_asm(LED_PIN2, true);

@@ -9,7 +9,7 @@ project(Proyecto_final  C CXX ASM
 
 set(CMAKE_C_STANDARD 11)
 set(CMAKE_CXX_STANDARD 17)
-
+set(PICO_BOARD "PICO")
 
 # Desomentar para la board de Maria
 # set(PICO_BOARD pico_w)
@@ -21,6 +21,7 @@ pico_sdk_init()
 add_executable(Proyecto_final
     main.c
     gpio.s
+    pwm.s
 )
 
 # pico_stdlib library. You can add more if they are needed
