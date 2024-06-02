@@ -23,6 +23,7 @@ add_executable(Proyecto_final
     gpio.s
     pwm.s
     uart.s
+    adc.s
 )
 
 # pico_stdlib library. You can add more if they are needed

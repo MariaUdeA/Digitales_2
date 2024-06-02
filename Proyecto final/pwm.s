@@ -38,19 +38,19 @@ pwm_init_asm:
 
 .equ    RESETS_BASE,            0x4000C000
 .equ    RESETS_DONE_OFFSET,     0x08
-.equ    PWM_BITMASK,            0x400               
+.equ    PWM_BITMASK,            0x4             
 
 release_reset_PWM_bank:
     LDR     R0, =(RESETS_BASE+ATOMIC_CLR)
-    LDR     R1, =(PWM_BITMASK)
-    LDR     R1, [R1]
+    MOV     R1, #PWM_BITMASK
+    LSL     R1, R1, #8
     STR     R1, [R0]
     LDR     R0, =(RESETS_BASE)    
 
 rstPWMdone:
     LDR     R1, [R0, #RESETS_DONE_OFFSET]
-    LDR     R1, =PWM_BITMASK
-    LDR     R1, [R1]
+    MOV     R2, #PWM_BITMASK
+    LSL     R2, R2, #8
     AND     R1, R1, R2
     BEQ     rstPWMdone
     BX      LR

@@ -6,8 +6,7 @@
 #define MAIN_H
 
 //definitions ADC
-#define ADC_GPIO_CH1 26
-#define ADC_CH1 0
+#define ADC_PIN 26
 
 // definiciones PWM
 #define PWM_PIN 14
@@ -33,6 +32,10 @@ void pwm_config_asm();
 void Set_cycle_A_asm(uint32_t);
 void pwm_init_asm(uint32_t);
 void Set_cycle_B_asm(uint32_t);
+
+// Funciones para el control del ADC
+void adc_init_asm(uint32_t);
+uint32_t adc_read_asm(uint32_t);
 
 // Funciones para el uso de UART
 void uart_printMsg_asm(uint32_t, uint32_t);
