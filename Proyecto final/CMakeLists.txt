@@ -28,6 +28,7 @@ add_executable(Proyecto_final
 # pico_stdlib library. You can add more if they are needed
 target_link_libraries(Proyecto_final 
             pico_stdlib
+            hardware_adc
             )
 
 # Enable usb output, disable uart output

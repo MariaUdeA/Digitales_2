@@ -84,7 +84,7 @@ setFunctionPWM:
  *
  * Función que configura el divisor de frecuencia del PWM
  * Parametros:
- * NONE
+ * R0: CH_PWM
  */
 .equ    PWM_BASE,   0x40050000
 .equ    CH7_CSR,    0x8c
@@ -95,7 +95,13 @@ setFunctionPWM:
 .equ    DEC_PART,   0           
 .EQU    INT_PART,   128         
 .equ    TOP_VALUE,  999         
-.equ    CC_VALUE,   0x1f4       
+.equ    CC_VALUE,   50
+
+// prueba = 750 ---> 1KHz ---> 75%
+//        = 500 ---> 1KHz ---> 50%
+//        = 250 ---> 1KHz ---> 25%
+//        = 100 ---> 1KHz ---> 10%
+//        = 50  ---> 1KHz ---> 5%
 
 .global pwm_config_asm
 pwm_config_asm:
@@ -126,6 +132,42 @@ pwm_config_asm:
 
     BX      LR    
  
+
+/*
+ * @brief Set_cycle_asm
+ * Esta función modifica el valor del registro CHx_CC
+ * Y con esto el ciclo de trabajo
+ *
+ * Parametros:
+ * R0: CC_VALUE
+ */
+.equ    PWM_BASE,   0x40050000
+.equ    CH7_CC,     0x98
+
+.global Set_cycle_A_asm
+Set_cycle_A_asm:
+    LDR     R1, =(PWM_BASE + CH7_CC)
+    STR     R0, [R1]
+    BX      LR
+
+/*
+ * @brief Set_cycle_asm
+ * Esta función modifica el valor del registro CHx_CC
+ * Y con esto el ciclo de trabajo
+ *
+ * Parametros:
+ * R0: CC_VALUE
+ */
+.equ    PWM_BASE,   0x40050000
+.equ    CH7_CC,     0x98
+
+.global Set_cycle_B_asm
+Set_cycle_B_asm:
+    LDR     R1, =(PWM_BASE + CH7_CC)
+    LSL     R0, #1
+    STR     R0, [R1]
+    BX      LR
+
 
 
 

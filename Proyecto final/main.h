@@ -5,8 +5,15 @@
 #ifndef MAIN_H
 #define MAIN_H
 
-//definitions
+//definitions ADC
+#define ADC_GPIO_CH1 26
+#define ADC_CH1 0
+
+// definiciones PWM
 #define PWM_PIN 14
+#define PWM_PIN1 15
+#define PWM_CH 5
+
 #define LED_PIN2 19
 #define LED_PIN 18
 #define FUNCSEL_SIO 5
@@ -23,8 +30,9 @@ void gpio_put_asm(uint32_t, bool);
 
 // Funciones para el control del PWM
 void pwm_config_asm();
+void Set_cycle_A_asm(uint32_t);
 void pwm_init_asm(uint32_t);
-
+void Set_cycle_B_asm(uint32_t);
 
 // Funciones para el uso de UART
 void uart_printMsg_asm(uint32_t, uint32_t);
