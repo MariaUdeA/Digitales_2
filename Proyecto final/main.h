@@ -6,11 +6,12 @@
 #define MAIN_H
 
 //definitions ADC
-#define ADC_PIN 26
+#define ADC_PIN1 26
+#define ADC_PIN2 26
 
 // definiciones PWM
-#define PWM_PIN 14
-#define PWM_PIN1 15
+#define PWM_PIN1 14
+#define PWM_PIN2 15
 #define PWM_CH 5
 
 #define LED_PIN2 19
@@ -19,6 +20,17 @@
 #define FUNCSEL_PWM 4
 #define TIME_DELAY 0x123A96
 #define PWM_STATUS  12
+
+//se usan para definir cositas
+#define MAX_ADC 4095
+#define MIN_ADC 500
+
+#define MAX_PWM 1000
+#define MIN_PWM 500
+
+uint32_t out1, out2;
+int pwm_gen, pwm1, pwm2;
+
 
 // Funciones para el control de los gpio
 void delay_asm(uint32_t);
