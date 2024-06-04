@@ -6,13 +6,13 @@
 #define MAIN_H
 
 //definitions ADC
-#define ADC_PIN 26
+#define ADC_PIN1 26
+#define ADC_PIN2 26
 
 // definiciones PWM
-#define PWM_PIN 8
-#define PWM_PIN1 9
-#define PWM_CH 4
-#define duty_cycle  500
+#define PWM_PIN1 14
+#define PWM_PIN2 15
+#define PWM_CH 5
 
 // Salidas digitales de los motores
 #define PIN_IN1 10
@@ -25,6 +25,17 @@
 #define FUNCSEL_SIO 5
 #define FUNCSEL_PWM 4
 #define TIME_DELAY 0x123A96
+
+
+//se usan para definir cositas
+#define MAX_ADC 4095
+#define MIN_ADC 500
+
+#define MAX_PWM 1000
+#define MIN_PWM 500
+
+uint32_t out1, out2;
+int pwm_gen, pwm1, pwm2;
 
 
 // Funciones para el control de los gpio
