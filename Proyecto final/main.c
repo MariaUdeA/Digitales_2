@@ -4,26 +4,37 @@
 #include "main.h"
 
 int main() {
-	printf("C1");
+	//setup
+	printf("Setup: ");
 	stdio_init_all();
-	printf(" C2");
+	//configurar pwm
+	pwm_init_asm(PWM_PIN1);
+	pwm_init_asm(PWM_PIN2);
+	printf("PWM done. ");
+	//configurar adc
+	adc_init_asm(ADC_PIN1);
+	adc_init_asm(ADC_PIN2);
+	printf("ADC done.\n");
+	//Configurar uart (yay t-t)
+	printf("UART done.\n");
 
-	pwm_init_asm(PWM_PIN);
-
-	adc_init_asm(ADC_PIN);
-	printf("C3");
-	//gpio_init_asm(LED_PIN);
-	//gpio_init_asm(LED_PIN2);
-
-	//gpio_set_dir_asm(LED_PIN, true);
-	//gpio_set_dir_asm(LED_PIN2, true);
-
-	//pwm_config_asm();
-
+	//main (LOOP)
 	while (1) {
-		uint32_t out;
-		out =adc_read_asm(ADC_PIN);
-		printf("*** Value read from ADC channel 0: %d *** \n", out);
+		//Lectura de los ADC
+		uint32_t out1, out2;
+		out1 = adc_read_asm(ADC_PIN1);
+		out2 = adc_read_asm(ADC_PIN2);
+
+		printf("*** Value read from ADC channel 0: %d *** \n", out1);
+		printf("*** Value read from ADC channel 1: %d *** \n", out1);
+
+		//criterio de movimiento de los pwm
+		pwm2 = (MIN_PWM-MAX_PWM)/(MAX_ADC-MIN_ADC)*(out1-MIN_ADC)+MAX_PWM;
+		pwm1 = (MIN_PWM-MAX_PWM)/(MAX_ADC-MIN_ADC)*(out1-MIN_ADC)+MAX_PWM;
+		// mover motores
+		Set_cycle_A_asm(pwm1);
+		Set_cycle_B_asm(pwm2);
+		//delay entre lecturas (se podría quitar, pero hay que ver)
 		delay_asm(TIME_DELAY);
 		/*
 		gpio_put_asm(LED_PIN, true);
