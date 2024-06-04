@@ -1,41 +1,43 @@
 #include <stdio.h>
 #include "pico/stdlib.h"
-
 #include "main.h"
 
 int main() {
-	printf("C1");
-	stdio_init_all();
-	printf(" C2");
 
+	// Se inicializa el pwm 
+	
 	pwm_init_asm(PWM_PIN);
+	pwm_init_asm(PWM_PIN1);
+	
 
-	adc_init_asm(ADC_PIN);
-	printf("C3");
-	//gpio_init_asm(LED_PIN);
-	//gpio_init_asm(LED_PIN2);
+	// Declaración de los pines de salida digital
+	gpio_init_asm(PIN_IN1);
+	gpio_init_asm(PIN_IN2);
+	gpio_init_asm(PIN_IN3);
+	gpio_init_asm(PIN_IN4);
 
-	//gpio_set_dir_asm(LED_PIN, true);
-	//gpio_set_dir_asm(LED_PIN2, true);
+	// Dirección de los pines digitales salida
+	gpio_set_dir_asm(PIN_IN1, true);
+	gpio_set_dir_asm(PIN_IN2, true);
+	gpio_set_dir_asm(PIN_IN3, true);
+	gpio_set_dir_asm(PIN_IN4, true);
 
-	//pwm_config_asm();
+	// Salidas digitales
 
+	gpio_put_asm(PIN_IN1, true);
+	gpio_put_asm(PIN_IN2, false);
+	gpio_put_asm(PIN_IN3, true);
+	gpio_put_asm(PIN_IN4, false);
+
+	// ciclo de dureza del pwm
+	pwm_config_asm();
+	pwm_config_asm();
+	
+	
 	while (1) {
-		uint32_t out;
-		out =adc_read_asm(ADC_PIN);
-		printf("*** Value read from ADC channel 0: %d *** \n", out);
+		Set_cycle_B_asm(duty_cycle);
+		Set_cycle_A_asm(duty_cycle);
 		delay_asm(TIME_DELAY);
-		/*
-		gpio_put_asm(LED_PIN, true);
-		gpio_put_asm(LED_PIN2, false);
-		uart_printMsg_asm(PWM_STATUS, PWM_STATUS);
-		delay_asm(TIME_DELAY);
-		
-		gpio_put_asm(LED_PIN, false);
-		gpio_put_asm(LED_PIN2, true);
-		uart_printMsg_asm(PWM_STATUS,PWM_STATUS);
-		delay_asm(TIME_DELAY);
-		*/
 	} 
 	return 0;
 }

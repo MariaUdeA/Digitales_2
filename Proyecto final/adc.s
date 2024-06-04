@@ -51,9 +51,9 @@ release_reset_ADC_bank:
 
 rstADCdone:
     LDR     R1, [R0, #RESETS_DONE_OFFSET]       // Carga la dirección del resetDone para checkear que se haya resetado     
-    MOV     R2, #ADC_BITMASK               // Carga la mascara de bit para el reset de IOBANK0
+    MOV     R2, #ADC_BITMASK                    // Carga la mascara de bit para el reset de IOBANK0
     AND     R1, R1, R2                          // checkea que el reset se haya realizado
-    BEQ     rstADCdone                      // MIENTRAS LA OPERACIÓN AND SEA DIFERENTE DE CERO EL RESET NO SE HA COMPLETADO                    // MIENTRAS LA OPERACIÓN AND SEA DIFERENTE DE CERO EL RESET NO SE HA COMPLETADO
+    BEQ     rstADCdone                          // MIENTRAS LA OPERACIÓN AND SEA DIFERENTE DE CERO EL RESET NO SE HA COMPLETADO                    // MIENTRAS LA OPERACIÓN AND SEA DIFERENTE DE CERO EL RESET NO SE HA COMPLETADO
     BX      LR    
 
 /*
@@ -67,9 +67,9 @@ rstADCdone:
  */
 .equ    ADC_BASE,      0x4004C000
 .equ    BASE_PIN,      26     
-.equ    START_VAL,     5  //Registro de CS
-.equ    ADC_DIV,       0x10        //frecuencia
-.equ    ADC_RESULT,    0x04        //registro de resultado       
+.equ    START_VAL,     5            //Registro de CS
+.equ    ADC_DIV,       0x10         //frecuencia
+.equ    ADC_RESULT,    0x04         //registro de resultado       
 
 .equ    INT_SEG,   11         
 .equ    DEC_SEG,   128 
@@ -102,14 +102,14 @@ adc_read_asm:
     MOV     R2, #READY_SIG
     
 Wait_sample:
-    LDR     R1, =(ADC_BASE)      //Cargar el cosiaco de control
+    LDR     R1, =(ADC_BASE)         //Cargar el cosiaco de control
     LDR     R1, [R1]
     LSR     R1, R1, #8
-    AND     R1, R1, R2          //saca el READY de la dirección
+    AND     R1, R1, R2              //saca el READY de la dirección
     CMP     R1, #0
     BEQ     Wait_sample
 
 //Tomar muestra desde el registro de resultado
     LDR     R0, =(ADC_BASE+ADC_RESULT)
-    LDR     R0, [R0]            //OJALA FUNCIONE
+    LDR     R0, [R0]                //OJALA FUNCIONE
     BX      LR    

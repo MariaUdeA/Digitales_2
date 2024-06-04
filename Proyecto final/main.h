@@ -9,16 +9,23 @@
 #define ADC_PIN 26
 
 // definiciones PWM
-#define PWM_PIN 14
-#define PWM_PIN1 15
-#define PWM_CH 5
+#define PWM_PIN 8
+#define PWM_PIN1 9
+#define PWM_CH 4
+#define duty_cycle  500
 
-#define LED_PIN2 19
-#define LED_PIN 18
+// Salidas digitales de los motores
+#define PIN_IN1 10
+#define PIN_IN2 11
+#define PIN_IN3 12
+#define PIN_IN4 13
+
+
+// Definiciones genreales del programa
 #define FUNCSEL_SIO 5
 #define FUNCSEL_PWM 4
 #define TIME_DELAY 0x123A96
-#define PWM_STATUS  12
+
 
 // Funciones para el control de los gpio
 void delay_asm(uint32_t);
