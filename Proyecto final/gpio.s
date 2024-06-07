@@ -126,17 +126,3 @@ gpio_put_asm:
 gpio_put_clear_asm:
     STR     R2, [R0, #GPIO_OUT_CLR_OFFSET]
     BX      LR
-
-/*
- *@brief delay_asm
- *
- * Esta función gasta tiempo
- * Parametros:
- * R0: BIG_NUM
- */
-
- .global delay_asm
- delay_asm:
-    SUB      R0, R0, #1
-    BNE     delay_asm
-    BX      LR

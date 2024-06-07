@@ -11,7 +11,7 @@ set(CMAKE_C_STANDARD 11)
 set(CMAKE_CXX_STANDARD 17)
 set(PICO_BOARD "PICO")
 
-# Desomentar para la board de Maria
+# Descomentar para la board de Maria
 # set(PICO_BOARD pico_w)
 
 # SDK Initialization - Mandatory
@@ -24,6 +24,7 @@ add_executable(Proyecto_final
     pwm.s
     uart.s
     adc.s
+    misc.s
 )
 
 # pico_stdlib library. You can add more if they are needed

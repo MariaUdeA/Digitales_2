@@ -4,6 +4,7 @@
  * Contiene las funciones para la configuración del
  * periferico adc
 */
+
 //Generales
 .equ    ATOMIC_XOR, 0x1000
 .equ    ATOMIC_SET, 0x2000
@@ -13,7 +14,7 @@
  *@brief adc_init_asm
  *
  * This functión does what it needs to do
- * Parameters:
+ * Parameters:(r0)
  * R0: GPIO_NUM
  */
 
@@ -57,7 +58,7 @@ rstADCdone:
     BX      LR    
 
 /*
- * @brief adc_config_asm
+ * @brief adc_read_asm
  *
  * Función que configura la lectura del ADC
  * Parametros:
@@ -85,9 +86,9 @@ adc_read_asm:
     mov     R1, #START_VAL          //carga el valor de enable y start_once
     LSL     R2, R2, #12             //mueve el canal 12 posiciones a la izquierda
     ADD     R2, R2, R1              //se pone también el enable y el start once 
-    LDR     R1, [R0]                //carga en r0 el cs
-    ORR     R1, R1, R2              //Escribir en enable y el start_once un 1 y el valor de la celda en 
-    STR     R1, [R0]                //Escribir el cambio
+    //LDR     R1, [R0]                //carga en r1 el cs
+    //ORR     R1, R1, R2              //Escribir en enable y el start_once un 1 y el valor de la celda en 
+    STR     R2, [R0]                //Escribir el cambio
 
 //Configurar el registro DIV
 // Para una frecuencia de 10KHz el CLK_DIV = 12.5

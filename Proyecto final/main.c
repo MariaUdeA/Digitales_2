@@ -6,16 +6,20 @@ int main() {
 	//setup
 	printf("Setup: ");
 	stdio_init_all();
+	//configurar GPIOS
+	gpio_init_asm(LED_PIN1);
+	gpio_init_asm(LED_PIN2);
+	//se asocian a salidas
+	gpio_set_dir_asm(LED_PIN1,true);
+	gpio_set_dir_asm(LED_PIN2,true);
+
 	//configurar pwm
 	pwm_init_asm(PWM_PIN1);
 	pwm_init_asm(PWM_PIN2);
-	printf("PWM done. ");
+
 	//configurar adc
 	adc_init_asm(ADC_PIN1);
 	adc_init_asm(ADC_PIN2);
-	printf("ADC done.\n");
-	//Configurar uart (yay t-t)
-	printf("UART done.\n");
 
 	//main (LOOP)
 	while (1) {
@@ -24,12 +28,23 @@ int main() {
 		out1 = adc_read_asm(ADC_PIN1);
 		out2 = adc_read_asm(ADC_PIN2);
 
-		printf("*** Value read from ADC channel 0: %d *** \n", out1);
-		printf("*** Value read from ADC channel 1: %d *** \n", out1);
+		uart_printMsg_asm(out1, out2, false);
 
 		//criterio de movimiento de los pwm
-		pwm2 = (MIN_PWM-MAX_PWM)/(MAX_ADC-MIN_ADC)*(out1-MIN_ADC)+MAX_PWM;
-		pwm1 = (MIN_PWM-MAX_PWM)/(MAX_ADC-MIN_ADC)*(out1-MIN_ADC)+MAX_PWM;
+		pwm2 = Map(out1);
+		pwm1 = Map(out2);
+
+		gpio_put_asm(LED_PIN1,false);
+		gpio_put_asm(LED_PIN2,false);
+
+		if (pwm2-pwm1>100){
+			gpio_put_asm(LED_PIN1,true);
+		}
+		else if (pwm1-pwm2>100){
+			gpio_put_asm(LED_PIN2,true);
+		}
+		uart_printMsg_asm(pwm1, pwm2, true);
+
 		// mover motores
 		Set_cycle_A_asm(pwm1);
 		Set_cycle_B_asm(pwm2);
