@@ -50,7 +50,6 @@ int main() {
 		Set_cycle_B_asm(pwm2);
 		//delay entre lecturas (se podría quitar, pero hay que ver)
 		delay_asm(TIME_DELAY);
-
 	} 
 	return 0;
 }

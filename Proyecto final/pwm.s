@@ -85,15 +85,15 @@ setFunctionPWM:
  * R0: CH_PWM
  */
 .equ    PWM_BASE,   0x40050000
-.equ    CH7_CSR,    0x8c
-.equ    CH7_DIV,    0x90
-.equ    CH7_CC,     0x98
-.equ    CH7_TOP,    0x9c
+.equ    CH4_CSR,    0x50
+.equ    CH4_DIV,    0x54
+.equ    CH4_CC,     0x5c
+.equ    CH4_TOP,    0x60
 
 .equ    DEC_PART,   0           
 .EQU    INT_PART,   128         
 .equ    TOP_VALUE,  999         
-.equ    CC_VALUE,   50
+.equ    CC_VALUE,   500
 
 // prueba = 750 ---> 1KHz ---> 75%
 //        = 500 ---> 1KHz ---> 50%
@@ -106,7 +106,7 @@ pwm_config_asm:
 
 // Primero se carga el valor del divisor de frecuencia. --> 133MHz
 // Para una frecuencia de 10KHz el CLK_DIV = 12.5
-    LDR     R0, =(PWM_BASE + CH7_DIV)              // Carga la dirección del registro base 
+    LDR     R0, =(PWM_BASE + CH4_DIV)               // Carga la dirección del registro base 
     LDR     R1, =(INT_PART)                         // Almacena en R1 la parte entera
     LDR     R2, =(DEC_PART)                         // Almacena en R2 la parte decimal 
     LSL     R1, R1, #4                              // Alinea la parte entera
@@ -114,17 +114,17 @@ pwm_config_asm:
 
     STR     R1, [R0]
 //  Se configura el registro cc para que el ciclo de trabajo sea del 50%
-    LDR     R0, =(PWM_BASE + CH7_CC)
-    LDR     R1, =CC_VALUE
-    STR     R1, [R0]
+    LDR     R0, =(PWM_BASE + CH4_CC)        // CARGA LA DIRECCIÓN DEL REGISTRO CC
+    LDR     R1, =CC_VALUE                   // R1 = VALOR DEL COUNTER COMPARE
+    STR     R1, [R0]                        // SE GUARDA ESA DIRECCIÓN
 
-// Ahora se carga el valor de TOP en el registro PWM_BASE+CH7_TOP
-    LDR     R0, =(PWM_BASE + CH7_TOP)
+// Ahora se carga el valor de TOP en el registro PWM_BASE+CH4_TOP
+    LDR     R0, =(PWM_BASE + CH4_TOP)       
     LDR     R1, =TOP_VALUE    
     STR     R1, [R0]
 
 // Se configura el registro CSR para que el PWM se active
-    LDR     R0, =(PWM_BASE + CH7_CSR)
+    LDR     R0, =(PWM_BASE + CH4_CSR)
     MOV     R1, #0x1
     STR     R1, [R0]
 
@@ -140,11 +140,11 @@ pwm_config_asm:
  * R0: CC_VALUE
  */
 .equ    PWM_BASE,   0x40050000
-.equ    CH7_CC,     0x98
+.equ    CH4_CC,     0x5c
 
 .global Set_cycle_A_asm
 Set_cycle_A_asm:
-    LDR     R1, =(PWM_BASE + CH7_CC)
+    LDR     R1, =(PWM_BASE + CH4_CC)
     STR     R0, [R1]
     BX      LR
 
@@ -157,11 +157,11 @@ Set_cycle_A_asm:
  * R0: CC_VALUE
  */
 .equ    PWM_BASE,   0x40050000
-.equ    CH7_CC,     0x98
+.equ    CH4_CC,     0x5c
 
 .global Set_cycle_B_asm
 Set_cycle_B_asm:
-    LDR     R1, =(PWM_BASE + CH7_CC)
-    LSL     R0, #1
+    LDR     R1, =(PWM_BASE + CH4_CC)
+    LSL     R0, #16
     STR     R0, [R1]
     BX      LR
