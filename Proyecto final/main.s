@@ -1,9 +1,9 @@
-.equ ADC_PIN1, 26
-.equ ADC_PIN2, 27
+.equ ADC_PIN1, 27
+.equ ADC_PIN2, 28
 
 // definiciones PWM
-.equ PWM_PIN1, 14
-.equ PWM_PIN2, 15
+.equ PWM_PIN1, 8
+.equ PWM_PIN2, 9
 
 // leds GPIO
 .equ LED_PIN2, 19
@@ -14,10 +14,10 @@
 
 //#define ADC_MIN  1000
 
-.global main
-main:
+.global main_asm
+main_asm:
     BL setUp
-    Bx loop
+    B loop
 
 setUp:
     PUSH    {LR}
@@ -33,10 +33,10 @@ setUp:
     MOV R0, #LED_PIN1
     MOV R1, #1
     BL  gpio_set_dir_asm
+
     MOV R0, #LED_PIN2
     MOV R1, #1
     BL  gpio_set_dir_asm
-    POP     {PC}
 
     //CONFIGURAR PWM
     MOV R0, #PWM_PIN1
@@ -44,11 +44,14 @@ setUp:
     MOV R0, #PWM_PIN2
     BL  pwm_init_asm
 
+    BL  pwm_config_asm
+
 	//CONFIGURAR ADC
     MOV R0, #ADC_PIN1
     BL  adc_init_asm
     MOV R0, #ADC_PIN2
     BL  adc_init_asm
+
     POP {PC}
 
 loop:
@@ -76,12 +79,7 @@ loop:
     MOV R0, R5
     BL Map
     MOV R5, R0
-    
-    //MOVER MOTORES
-    MOV R0, R5
-    BL Set_cycle_A_asm
-    MOV R0, R4
-    BL Set_cycle_B_asm    
+       
 
     //INICIALIZAR GPIOS PARA QUE SIEMPRE SEA UNO SOLO PRENDIDO
     MOV R0, #LED_PIN1
@@ -98,20 +96,36 @@ loop:
     MOV R0, #LED_PIN1
     SUB R1, R4, R5
     CMP R6, R1
-    BLGE gpio_put_asm
+    BGE on_led
     
-    MOV R6, #LED_PIN2
+    MOV R0, #LED_PIN2
     SUB R1, R5, R4
     CMP R6, R1
-    BLGE gpio_put_asm
+    BGE on_led
 
+    B print_pwm
+
+    on_led:
+    BL gpio_put_asm
+
+    print_pwm:
     //PRINT PWM
     MOV R0, R5 //PWM 1 -> R5
     MOV R1, R4 //PWM 2 -> R4
     MOV R2, #1
     BL uart_printMsg_asm
 
+    //MOVER MOTORES
+    MOV R0, R5
+    BL Set_cycle_A_asm
+
     LDR R0, =(TIME_DELAY)
     BL delay_asm
 
-    Bx loop
+    MOV R0, R4
+    BL Set_cycle_B_asm  
+
+    LDR R0, =(TIME_DELAY)
+    BL delay_asm
+
+    B loop

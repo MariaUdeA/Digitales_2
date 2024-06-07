@@ -1,7 +1,7 @@
 /**
  * @brief Main header file
 */
-
+/*
 #ifndef MAIN_H
 #define MAIN_H
 
@@ -10,11 +10,9 @@
 #define ADC_PIN2 28
 
 // definiciones PWM
-#define PWM_PIN1 14
-#define PWM_PIN2 15
-#define PWM_CH 5
+#define PWM_PIN1 8
+#define PWM_PIN2 9
 
-<<<<<<< HEAD
 #define LED_PIN2 19
 #define LED_PIN1 18
 //#define FUNCSEL_SIO 5
@@ -23,20 +21,9 @@
 #define TIME_DELAY 0x123A96
 //#define PWM_STATUS  12
 #define gap_dir 100
-=======
-// Salidas digitales de los motores
-#define PIN_IN1 10
-#define PIN_IN2 11
-#define PIN_IN3 12
-#define PIN_IN4 13
 
-
-// Definiciones genreales del programa
-#define FUNCSEL_SIO 5
-#define FUNCSEL_PWM 4
 #define TIME_DELAY 0x123A96
 
->>>>>>> 342e139be20d05ae93452ca4646ff888920872d2
 
 //#define ADC_MIN  1000
 
@@ -66,5 +53,7 @@ void uart_printMsg_asm(uint32_t, uint32_t, bool);
 //Funciones miscelaneas
 void delay_asm(uint32_t);
 uint32_t Map(uint32_t);
+uint32_t Factor(uint32_t);
 
 #endif
+*/
