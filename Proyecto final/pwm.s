@@ -26,8 +26,6 @@ pwm_init_asm:
     POP     {PC}
 
 
-
-
 /*
  * @brief pwm_reset_release
  *
@@ -106,7 +104,7 @@ setFunctionPWM:
 .global pwm_config_asm
 pwm_config_asm:
 
-// Primero se carga el valor del divisor de frecuencia.
+// Primero se carga el valor del divisor de frecuencia. --> 133MHz
 // Para una frecuencia de 10KHz el CLK_DIV = 12.5
     LDR     R0, =(PWM_BASE + CH7_DIV)              // Carga la dirección del registro base 
     LDR     R1, =(INT_PART)                         // Almacena en R1 la parte entera
@@ -167,7 +165,3 @@ Set_cycle_B_asm:
     LSL     R0, #1
     STR     R0, [R1]
     BX      LR
-
-
-
-
