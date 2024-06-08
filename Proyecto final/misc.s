@@ -1,7 +1,7 @@
 .equ ADC_MAX, 4000
-.equ ADC_MIN, 1000
+.equ ADC_MIN, 1300
 .equ PWM_MAX, 1000
-.equ PWM_MIN, 500
+.equ PWM_MIN, 700
 
 .global Map
 Map:
@@ -9,10 +9,10 @@ Map:
 //Salidas->(x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min; en R0
 	PUSH {R4, R5, LR}
 	MOV R5, R0 // GUARDAR EN R5 LA EN
-	LDR R3, =(ADC_MIN)
-	LDR R4, =(PWM_MIN)
-	LDR R1, =(ADC_MAX)
-	LDR R0, =(PWM_MAX)
+	LDR R3, = (ADC_MIN)
+	LDR R4, = (PWM_MIN)
+	LDR R1, = (ADC_MAX)
+	LDR R0, = (PWM_MAX)
     // SI ES MENOR AL MINIMO, ASIGNA CERO Y SE VA
     CMP R5, R3
     BLE Se_va
@@ -61,7 +61,7 @@ Se_va:
 
 
 .global Factor
-.equ FACTOR, 600
+.equ FACTOR, 700
 .equ over, 1000
 //entrada R0
 Factor:

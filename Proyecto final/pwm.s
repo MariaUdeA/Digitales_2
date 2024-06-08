@@ -3,11 +3,12 @@
  *
  * Contiene las funciones para la configuración del
  * perifereico PWM
+
 */
+
 .equ    ATOMIC_XOR, 0x1000
 .equ    ATOMIC_SET, 0x2000
 .equ    ATOMIC_CLR, 0x3000
-
 
 /*
  *@brief pwm_init_asm
